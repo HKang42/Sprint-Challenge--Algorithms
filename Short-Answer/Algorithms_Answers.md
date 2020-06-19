@@ -2,14 +2,16 @@
 
 ## Exercise I
 
-a)The algorithm is basically calculating how long it takes for n^2 to reach n^3. 
+a)
+The algorithm is basically calculating how long it takes for n^2 to reach n^3. 
 The while loops ends when "a" reaches n^3. "a" is calculated by taking n^2 and adding it to itself for every loop.  In other words, a = 1 * n^2 for loop 1, a = 2 * n^2 for loop 2, a = 3 * n^2 for loop 3.... a = b * n^2 for loop b.
 
 So the entire loop is simply multiplying n^2 by the number of times needed to reach n^3.
 
 Therefore, the runtime is n^3 / n^2 = n.  So runtime is O(n).
 
-b) The first loop in the algorithm is a simple for loop that iterates from 0 to n which means O(n) runtime.
+b) 
+The first loop in the algorithm is a simple for loop that iterates from 0 to n which means O(n) runtime.
 The second (nested) loop is more complicated. It is a while loop that ends when j >= n where j starts from 1 and is multiplied by 2 each iteration. In other words, j = 2 ^ k where k = number of loops until j reaches n.  From this, we 
 can say that the number of loops required as a function of n is:
 
@@ -18,7 +20,8 @@ log2(n) = k
 So the runtime of the nested loop is log2(n).  Which means the overall runtime of both loops is O(n*log2(n)).
 
 
-c) This algorithm is a simple recursive addition that adds 2 each time the function is called. Every time the function is called, the input "bunnies" is decreased by 1 until it reaches the base case of "bunnies" = 0.
+c) 
+This algorithm is a simple recursive addition that adds 2 each time the function is called. Every time the function is called, the input "bunnies" is decreased by 1 until it reaches the base case of "bunnies" = 0.
 In other words, the number of recursive loops or stages needed to reach the base case is simply how many times 1 must be subtracted from n to reach n = 0. Therefore, the number of recursive stages is n.  So the runtime of this algorithm is simply O(n)
 
 ## Exercise II
@@ -65,7 +68,7 @@ What if egg is not broken by the highest floor?
 
 ### Runtime complexity
 
-This type of binary search cuts the search space in half with every call. The worst case scenario is when the break floor is at one of the extremes. In this case, the number of recursive calls required is 2 ^ k = n. Where k is number of calls. So we can rewrite the equation to get k = log2(n).  So the runtime is O(n*log2(n)).
+This type of binary search cuts the search space in half with every call. The worst case scenario is when the break floor is at one of the extremes. In this case, the number of recursive calls required is 2 ^ k = n. Where k is number of calls. So we can rewrite the equation to get k = log2(n).  So the runtime is O(log2(n)).
 
 
 ### Pseudocode 2 (old)
