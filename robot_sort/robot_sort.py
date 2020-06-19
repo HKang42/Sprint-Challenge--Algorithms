@@ -92,53 +92,114 @@ class SortingRobot:
         """
         return self._light == "ON"
 
+    def set_position(self, i):
+        """
+        Set position to index i in the list.
+        """
+        while self.can_move_left() == True:
+            self.move_left()
+        
+        for _ in range(0, i):
+            self.move_right()
+
+    def right_switch(self):
+        """
+        Swaps the list element at current position with the next element. 
+        Position remains unchanged.
+
+        The state of the list after each step is visualized using an example of [4, 2].
+        The ^ refers to the current position of the robot.
+        """
+        # starting state
+
+        # [4, N]  holding 2
+        #  ^   
+
+        self.swap_item()        
+        # [2, N]  holding 4
+        #  ^
+
+        self.move_right()
+        # [2, N]  holding 4
+        #     ^
+
+        self.swap_item()
+        # [2, 4]  holding N
+        #     ^
+
+        self.move_left()
+        # [2, 4]  holding 4
+        #  ^   
+
+        self.swap_item()
+        # [N, 4]  holding 2
+        #  ^   
+
     def sort(self):
         """
         Sort the robot's list.
+        Uses a modified version of insertion sort. 
+        The added set_position() and right_switch() helper functions handle most of the changes.
         """
-        # Fill this out
-
-        # check if robot can move right (there is more than 1 list element)
-        if self.can_move_right() == True:
-            
-            # get the number at position 0
-            self.swap_item()
-
-            # move to position 1
-            self.move_right()
         
-        else: 
-            print(" RIP ")
+        # check if robot can move right (there is more than 1 list element)
+        if self.can_move_right() == False:
             return 
 
-
+        # iterate through list and compare each element to the previous
         for i in range(1, len(self._list)):
-            print('Loop num\t', i)
-            self._position = i
-            print("Item ", self._item)
             
-            print("Compare: ", self._item, self._list[self._position])
-            while i > 0 and self.compare_item() == -1:
-                self.swap_item()
-                print("Swap made. Item is", self._item, ". Position is", self._position)
-                self._position -= 1
+            # Move to position i and get item. Replaces the value at i with None.
+            self.set_position(i)
+            self.swap_item()
+
+            #print('\nLoop num', self._position)
+            #print("Item ", self._item)            
+            #print("Compare: ", self._item, "<", self._list[self._position], "=", self.compare_item())
+            
+
+            # iterate backwards from i to 0
+            while self.can_move_left() == True:
+
+                self.move_left()
+
+                #print(self._list)
+                #print("Compare: ", self._item, "<", self._list[self._position])
+
+                if self.compare_item() == -1:
+                    
+                    # Move number at current position to the right. 
+                    # Position remains unchanged.
+                    self.right_switch()
+                    
+                    #print("Swap made. Item is", self._item, ". New Position is", self._position)
+                    #print(self._list)
+                    #print("New list", self._list)
+                    
+                else:
+                    self.move_right()
+                    break
+            
+            self.swap_item()
+            #print(self._list)
 
     def insertion_sort(self):
-
+        """
+        Insertion sort reference code.
+        The above solution is a modified version that 
+        """
         for i in range(1, len(self._list)):
             
-            curr_book = self._list[i]
+            curr_val = self._list[i]
 
             curr_index = i
 
-            # while i > 0 and current book is smaller than the previous
-                # move the current book to the left
-            while curr_index > 0 and curr_book < self._list[curr_index - 1]:
+            # while i > 0 and current value is smaller than the previous
+            #       move the current book to the left
+            while curr_index > 0 and curr_val < self._list[curr_index - 1]:
 
-                # swap them 
                 self._list[curr_index], self._list[curr_index - 1] = self._list[curr_index - 1], self._list[curr_index] 
 
-                # we need to keep track of our current book's changing index 
                 curr_index -= 1
 
         return self._list
@@ -148,36 +209,29 @@ if __name__ == "__main__":
     # Test our your implementation from the command line
     # with `python robot_sort.py`
 
-    #l = [15, 41, 58, 49, 26, 4, 28, 8, 61, 60, 65, 21, 78, 14, 35, 90, 54, 5, 0, 87, 82, 96, 43, 92, 62, 97, 69, 94, 99, 93, 76, 47, 2, 88, 51, 40, 95, 6, 23, 81, 30, 19, 25, 91, 18, 68, 71, 9, 66, 1, 45, 33, 3, 72, 16, 85, 27, 59, 64, 39, 32, 24, 38, 84, 44, 80, 11, 73, 42, 20, 10, 29, 22, 98, 17, 48, 52, 67, 53, 74, 77, 37, 63, 31, 7, 75, 36, 89, 70, 34, 79, 83, 13, 57, 86, 12, 56, 50, 55, 46]
+    l = [15, 41, 58, 49, 26, 4, 28, 8, 61, 60, 65, 21, 78, 14, 35, 90, 54, 5, 0, 87, 82, 96, 43, 92, 62, 97, 69, 94, 99, 93, 76, 47, 2, 88, 51, 40, 95, 6, 23, 81, 30, 19, 25, 91, 18, 68, 71, 9, 66, 1, 45, 33, 3, 72, 16, 85, 27, 59, 64, 39, 32, 24, 38, 84, 44, 80, 11, 73, 42, 20, 10, 29, 22, 98, 17, 48, 52, 67, 53, 74, 77, 37, 63, 31, 7, 75, 36, 89, 70, 34, 79, 83, 13, 57, 86, 12, 56, 50, 55, 46]
     #l = [1, 3, 2, 5, 4]
-    l = [2, 4, 3, 6, 1, 5]
+    #l = [2, 4, 3, 6]
+    #l = [4,2,0]
     print("\nInput")
     print(l)
 
     robot = SortingRobot(l)
 
-    #robot.sort()
-    #print(robot._list)
-
-    """
-    # test item swap
-
-    #print(robot._position)
-    robot.swap_item()
-
-    print("Item", robot._item)
-    print("List", robot._list)
-    """
-
-    #print(5 > None)
-
-    #robot.insertion_sort()
-    print("\nSort")
+    print("\nSorted List")
     robot.sort()
-    print("\nList")
     print(robot._list)
 
 
-    l = [1,3,2,5, 0, 4]
+    """
+    # Test the set_position method
+
+    l = [1,3,2,5,0,4]
     robot = SortingRobot(l)
-    print(robot.insertion_sort())
+    print('\n\n')
+    print("Pos", robot._position)
+    robot.set_position(5)
+    print("Pos", robot._position)
+    robot.swap_item()
+    print("item", robot._item)
+    """
