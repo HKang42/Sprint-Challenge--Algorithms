@@ -33,7 +33,7 @@ Write out your proposed algorithm in plain English or pseudocode AND give the ru
 ### Pseudocode 1 - Generic Recursive Binary Search
 My initial answer had runtime O(n) because in the worst case, it checked every floor. To minimze number of eggs broken (number of loops/calls) we can use a Binary search.
 
-Function should look like:
+The general function structure should look like:
 
 def floor_finder(n, low = 0):
  - n is the highest floor and low is the lowest.

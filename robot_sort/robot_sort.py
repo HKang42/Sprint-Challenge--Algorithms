@@ -97,16 +97,87 @@ class SortingRobot:
         Sort the robot's list.
         """
         # Fill this out
-        pass
+
+        # check if robot can move right (there is more than 1 list element)
+        if self.can_move_right() == True:
+            
+            # get the number at position 0
+            self.swap_item()
+
+            # move to position 1
+            self.move_right()
+        
+        else: 
+            print(" RIP ")
+            return 
+
+
+        for i in range(1, len(self._list)):
+            print('Loop num\t', i)
+            self._position = i
+            print("Item ", self._item)
+            
+            print("Compare: ", self._item, self._list[self._position])
+            while i > 0 and self.compare_item() == -1:
+                self.swap_item()
+                print("Swap made. Item is", self._item, ". Position is", self._position)
+                self._position -= 1
+
+    def insertion_sort(self):
+
+        for i in range(1, len(self._list)):
+            
+            curr_book = self._list[i]
+
+            curr_index = i
+
+            # while i > 0 and current book is smaller than the previous
+                # move the current book to the left
+            while curr_index > 0 and curr_book < self._list[curr_index - 1]:
+
+                # swap them 
+                self._list[curr_index], self._list[curr_index - 1] = self._list[curr_index - 1], self._list[curr_index] 
+
+                # we need to keep track of our current book's changing index 
+                curr_index -= 1
+
+        return self._list
 
 
 if __name__ == "__main__":
     # Test our your implementation from the command line
     # with `python robot_sort.py`
 
-    l = [15, 41, 58, 49, 26, 4, 28, 8, 61, 60, 65, 21, 78, 14, 35, 90, 54, 5, 0, 87, 82, 96, 43, 92, 62, 97, 69, 94, 99, 93, 76, 47, 2, 88, 51, 40, 95, 6, 23, 81, 30, 19, 25, 91, 18, 68, 71, 9, 66, 1, 45, 33, 3, 72, 16, 85, 27, 59, 64, 39, 32, 24, 38, 84, 44, 80, 11, 73, 42, 20, 10, 29, 22, 98, 17, 48, 52, 67, 53, 74, 77, 37, 63, 31, 7, 75, 36, 89, 70, 34, 79, 83, 13, 57, 86, 12, 56, 50, 55, 46]
+    #l = [15, 41, 58, 49, 26, 4, 28, 8, 61, 60, 65, 21, 78, 14, 35, 90, 54, 5, 0, 87, 82, 96, 43, 92, 62, 97, 69, 94, 99, 93, 76, 47, 2, 88, 51, 40, 95, 6, 23, 81, 30, 19, 25, 91, 18, 68, 71, 9, 66, 1, 45, 33, 3, 72, 16, 85, 27, 59, 64, 39, 32, 24, 38, 84, 44, 80, 11, 73, 42, 20, 10, 29, 22, 98, 17, 48, 52, 67, 53, 74, 77, 37, 63, 31, 7, 75, 36, 89, 70, 34, 79, 83, 13, 57, 86, 12, 56, 50, 55, 46]
+    #l = [1, 3, 2, 5, 4]
+    l = [2, 4, 3, 6, 1, 5]
+    print("\nInput")
+    print(l)
 
     robot = SortingRobot(l)
 
+    #robot.sort()
+    #print(robot._list)
+
+    """
+    # test item swap
+
+    #print(robot._position)
+    robot.swap_item()
+
+    print("Item", robot._item)
+    print("List", robot._list)
+    """
+
+    #print(5 > None)
+
+    #robot.insertion_sort()
+    print("\nSort")
     robot.sort()
+    print("\nList")
     print(robot._list)
+
+
+    l = [1,3,2,5, 0, 4]
+    robot = SortingRobot(l)
+    print(robot.insertion_sort())
