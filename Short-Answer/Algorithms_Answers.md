@@ -26,8 +26,49 @@ Suppose that you have an n-story building and plenty of eggs. Suppose also that 
 
 Write out your proposed algorithm in plain English or pseudocode AND give the runtime complexity of your solution.
 
+## New Answer (old answer below)
 
-### Pseudocode
+(When I wrote my first answer I didn't see that they wanted us to minimize the number of broken eggs)
+
+### Pseudocode 1 - Generic Recursive Binary Search
+My initial answer had runtime O(n) because in the worst case, it checked every floor. To minimze number of eggs broken (number of loops/calls) we can use a Binary search.
+
+Function should look like:
+
+def floor_finder(n, low = 0):
+ - n is the highest floor and low is the lowest.
+
+ - calculate the middle point (mid = (n+low) // 2)
+
+check if we reach the base case (highest floor = lowest floor)
+ - if n == low:
+    return n
+
+check if egg is broken by the HIGH floor
+- if is_broken (n) == True:
+
+        # f must be between mid and high
+        return floor_finer(n, mid)
+
+
+check if egg is broken by the MID floor
+ - elif is_broken (mid) == True:
+        
+        # f must be between low and mid
+        return floor_finder(mid, low)
+
+
+What if egg is not broken by the highest floor?
+  else:
+        return "Get a taller building"
+
+
+### Runtime complexity
+
+This type of binary search cuts the search space in half with every call. The worst case scenario is when the break floor is at one of the extremes. In this case, the number of recursive calls required is 2 ^ k = n. Where k is number of calls. So we can rewrite the equation to get k = log2(n).  So the runtime is O(n*log2(n)).
+
+
+### Pseudocode 2 (old)
 
 A simple recursive solution would be to continually increment f until our egg breaks.
 
